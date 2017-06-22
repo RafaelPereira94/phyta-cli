@@ -1,0 +1,42 @@
+{
+    "trees": [
+        {
+            "id": "rooted",
+            "description": "Rooted tree",
+            "parser": "parseRootedTree",
+            "accepts": ["rf", "rfl", "triplet", "quartet"]
+        },
+        {
+            "id": "unrooted",
+            "description": "Unrooted tree",
+            "parser": "parseUnrootedTree",
+            "accepts": ["rf", "rfl", "triplet", "quartet"]
+        },
+        {
+            "id": "forest",
+            "description": "Tree forest",
+            "parser": "parseTreeForest",
+            "accepts": ["rf", "rfl", "triplet", "quartet"]
+        }
+    ],
+    "metrics": [
+        {
+            "id": "robinsonFoulds",
+            "description": "Robinson Foulds Distance",
+            "metric": "rf"
+        },
+        {
+            "id": "robinsonFouldsLength",
+            "description": "Robinson Foulds with Lengths",
+            "metric": "rfl"
+        }
+    ],
+    "parsers": [
+        {
+            "id": "newick",
+            "description": "newick format",
+            "parser": "nwk"
+        }
+    ]
+    
+}

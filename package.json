@@ -1,0 +1,16 @@
+{
+  "name": "phyta-cli",
+  "version": "1.0.0",
+  "description": "Console line interface that process phylogenetic trees metrics.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafael Pereira, Ines Castro",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "latest",
+    "fs": "0.0.1-security",
+    "require-dir": "^0.3.2"
+  }
+}
