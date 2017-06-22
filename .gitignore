@@ -15,11 +15,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
-
 # nyc test coverage
-.nyc_output
-
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
@@ -61,10 +57,7 @@ typings/
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/**/workspace.xml
 .idea/**/tasks.xml
-.idea/dictionaries
-
 # Sensitive or high-churn files:
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -106,4 +99,31 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# ignore packages installed by npm
+typings
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+#ignore .ideia
+.idea/
+
+# User-specific stuff:
+.idea/tasks.xml
 
