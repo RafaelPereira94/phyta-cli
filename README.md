@@ -14,15 +14,20 @@ Path to file with trees to be processed.
 
 * **`-t, --types <path>`**
 Path to file with tree types.
+
 * **`-m, --metrics <path>`**
 Path to file with metrics.
 
 * **`-p,  --parser <parser>`**
 Parser to be used on the trees.
 
+* **`-o,  --output <path>`**
+Output path where the results will be saved.
+
 All command options are required, if any one of them is missing an exception will be thrown.
 
 **Usage example:**
+
 In order to run PhytA-cli from command line you must add on the folder **trees**, the metrics that will be used, the trees and their types. Each one in a different file. 
 All the metrics, trees and tree types are separated by `$` character.
 
@@ -44,7 +49,10 @@ All the metrics, trees and tree types are separated by `$` character.
 
 >robinsonFoulds$robinsonFouldsLength
 
-
 Using the files specified above, we can run CLI using this command:
 
-> node app.js -f trees.txt -t types.txt -m metrics.txt -p newick
+> node app.js --trees trees.txt --types types.txt --metrics metrics.txt --parser newick --output /Users/RafaelPereira/Desktop
+
+**Supported metrics:**
+
+For now only Robinson–Foulds and Robinson–Foulds Length are available in the future more metrics will be added, for example: Triplet metric
