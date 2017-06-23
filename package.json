@@ -1,6 +1,6 @@
 {
   "name": "phyta-cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Console line interface that process phylogenetic trees metrics.",
   "main": "cli.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/maxogden/torrent.git"
+    "url": "https://github.com/RafaelPereira94/phyta-cli.git"
   },
   "bugs": {
     "url": "https://github.com/RafaelPereira94/phyta-cli/issues"
