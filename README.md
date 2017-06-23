@@ -1,6 +1,14 @@
 # phyta-cli
+
+[![NPM](https://nodei.co/npm/phyta-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/phyta-cli/)
+
 Command line interface, that allows the user to process
 trees with the metrics and parsers available.
+
+**Install:**
+
+In order to use the phyta-cli you need to install it globally in your machine using: 
+>npm install -g phyta-cli
 
 **Options:**
 * **`-h, --help `**
@@ -28,7 +36,7 @@ All command options are required, if any one of them is missing an exception wil
 
 **Usage example:**
 
-In order to run PhytA-cli from command line you must add on the folder **trees**, the metrics that will be used, the trees and their types. Each one in a different file. 
+In order to run PhytA-cli from command line, you must specify,the metrics that will be used, the trees and their types. Each one in a different file. 
 All the metrics, trees and tree types are separated by `$` character.
 
 **Tree file:**
@@ -51,8 +59,13 @@ All the metrics, trees and tree types are separated by `$` character.
 
 Using the files specified above, we can run CLI using this command:
 
-> node app.js --trees trees.txt --types types.txt --metrics metrics.txt --parser newick --output /Users/RafaelPereira/Desktop
+> phyta-cli --trees /Users/RafaelPereira/Desktop/trees/trees.txt --types /Users/RafaelPereira/Desktop/trees/types.txt --metrics /Users/Raf
+  aelPereira/Desktop/trees/metrics.txt --parser newick --output /Users/RafaelPereira/Desktop
 
-**Supported metrics:**
 
-For now only Robinson–Foulds and Robinson–Foulds Length are available in the future more metrics will be added, for example: Triplet metric
+**Supported metrics and parsers:**
+
+For now only Robinson–Foulds and Robinson–Foulds Length are available in the future more metrics will be added, for example: Triplet metric.
+
+More parsers may be added in the future but for now only newick parser is supported.
+

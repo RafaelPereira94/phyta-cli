@@ -1,8 +1,8 @@
 {
   "name": "phyta-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Console line interface that process phylogenetic trees metrics.",
-  "main": "app.js",
+  "main": "cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,5 +12,21 @@
     "commander": "latest",
     "fs": "0.0.1-security",
     "require-dir": "^0.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxogden/torrent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RafaelPereira94/phyta-cli/issues"
+  },
+  "bin": {
+    "phyta-cli": "./cli.js"
+  },
+  "keywords": [
+  "phylogenetic trees",
+  "metrics",
+  "robinson foulds",
+  "cli"
+  ]
 }

@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 'use strict'
 
 let pg = require('commander')
 let fs = require('fs')
 let service = require('./service/consoleService')
 
-const dir = './trees/'
+//const dir = __dirname + '/trees/'
 
 if(process.argv.length > 2) {
     pg
@@ -21,9 +22,9 @@ if(process.argv.length > 2) {
 
     let trees,types,metrics,parser,filepath
 
-    trees = fs.readFileSync(dir+pg.trees).toString().split('$')// get trees from files
-    types = fs.readFileSync(dir+pg.types).toString().split('$')
-    metrics = fs.readFileSync(dir+pg.metrics).toString().split('$')
+    trees = fs.readFileSync(pg.trees).toString().split('$')// get trees from files
+    types = fs.readFileSync(pg.types).toString().split('$')
+    metrics = fs.readFileSync(pg.metrics).toString().split('$')
     parser = pg.parser
     filepath = pg.output
 
