@@ -38,12 +38,12 @@ function TreeForest(){
     /**
      * Produces a representation of the tree forest.
      * 
-     * @returns {Array} - Returns an array of objects representing the tree forest.
+     * @returns {Object} - Returns an array of objects representing the tree forest.
      */
     this.getRepresentation = function (type){
         const f = []
         this.tree.forEach(t => f.push(t.getRepresentation('unrooted')))
-        return {'id': this.id, 'type': type, 'trees': f}
+        return {'id': this.id, 'format': this.format, 'type': type, 'tree': f}
     }
 
     /**
@@ -53,11 +53,12 @@ function TreeForest(){
      * @returns 
      */
     this.getItemData = function(id){
-        let data = null
-        this.tree.forEach(t => {
-            if((data = t.getItemData(id)) != null)
-                return data
-        })
+        let data
+        for(let t of this.tree){
+            data = t.getItemData(id)
+            if(data != null)
+                break;
+        }
         return data
     }
 
@@ -68,11 +69,11 @@ function TreeForest(){
      * @returns 
      */
     this.getItemLength = function(id){
-        let length = null
-        this.tree.forEach(t => {
-            if((length = t.getItemLength(id)) != null)
-                return length
-        })
+        let length
+        for(let t of this.tree){
+            length = t.getItemLength(id)
+            if(length != null) break
+        }
         return length
     }
 }

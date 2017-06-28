@@ -5,8 +5,6 @@ let pg = require('commander')
 let fs = require('fs')
 let service = require('./service/consoleService')
 
-//const dir = __dirname + '/trees/'
-
 if(process.argv.length > 2) {
     pg
         .version('0.0.1')

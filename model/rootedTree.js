@@ -108,7 +108,7 @@ function RootedTree(){
             f.push(t)
         })
 
-        return new TreeRepresentation(this.id, type, f, this.hashtable.items, this.getClusters())
+        return new TreeRepresentation(this.id, this.format, type, f, this.hashtable.items, this.getClusters())
     }
 }
 

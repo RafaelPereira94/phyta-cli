@@ -56,8 +56,9 @@ function parseUnrootedTree(str){
  */
 function parseTreeForest(str){
     const tree = new TreeForest()
-
-    const strs = str.split(';')
+    tree.format = str
+    let strs = str.split(';')
+    strs = strs.map(val => val.concat(';'))
     strs.pop() //remove final empty string
     strs.forEach(s => {
         tree.addTree(parseUnrootedTree(s))
@@ -74,6 +75,8 @@ function parseTreeForest(str){
  * @private
  */
 function parseTree(structure, str){
+    structure.format = str
+
     const ancestors = []
     let firstNode = true,elem
 
@@ -85,8 +88,9 @@ function parseTree(structure, str){
                 ':': /:/,
                 ';': /;/,
                 ',': /,/,
-                'NUMBER': /\d+\.*\d*|\.\d+/, // optional beginning 0 for decimal numbers
-                'STRING': /[a-zA-Z_\+\.\\\-\d'\s\[\]\*\/{}]+/, // your mileage with this regex may vary
+                //'NUMBER': /\d+\.*\d*|\.\d+/,
+                'NUMBER': /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/,
+                'STRING': /[a-zA-Z_\+\.\\\-\d'\s\[\]\*\/{}]+/,
             };
 
         let classify = function(tkn) {
@@ -152,7 +156,7 @@ function parseTree(structure, str){
             return returnSym;
         }
 
-        throw new Error("Unexpected symbol " + returnSym + " , expected -> " + type);
+        throw new Error('Unexpected symbol ->' + returnSym + ', expected -> ' + type);
     }
 
     let length = function() {
@@ -241,35 +245,3 @@ function parseTree(structure, str){
 
     return tree()
 }
-
-/*function parseTree(structure, str){
-
- const ancestors = []
- let elem = structure.createElem(null)
- structure.tree = elem
-
- const tokens = str.split(/\s*(;|\(|\)|,|:)\s*!/)
- for (let i = 0; i < tokens.length; i++) {
- switch (tokens[i]) {
- case '(': // new branchset
- ancestors.push(elem)
- elem = structure.createElem(elem)
- break
- case ',': // another branch
- elem = structure.createElem(ancestors[ancestors.length-1])
- break
- case ')': // optional name next
- elem = ancestors.pop()
- break
- case ':': // optional length next
- break
- default:
- const t = tokens[i-1]
- if (t == ')' || t == '(' || t == ',')
- structure.setElemInfoData(elem, tokens[i])
- else if (t == ':')
- structure.setElemInfoLength(elem, parseFloat(tokens[i]))
- }
- }
- return structure
- }*/

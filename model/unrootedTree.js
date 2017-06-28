@@ -127,7 +127,7 @@ function UnrootedTree(){
             e.vertexes.forEach(v => t.vertexes.push(v.id))
             f.push(t)
         })
-        const tr = new TreeRepresentation(this.id, type, f, this.hashtable.items, this.getClusters())
+        const tr = new TreeRepresentation(this.id, this.format, type, f, this.hashtable.items, this.getClusters())
         return tr
     }
 }

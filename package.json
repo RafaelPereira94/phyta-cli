@@ -1,6 +1,6 @@
 {
   "name": "phyta-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Console line interface that process phylogenetic trees metrics.",
   "main": "cli.js",
   "scripts": {
@@ -27,6 +27,10 @@
   "phylogenetic trees",
   "metrics",
   "robinson foulds",
-  "cli"
+  "cli",
+  "phylo",
+  "newick",
+  "phylogeny",
+  "phylogenetic"
   ]
 }
