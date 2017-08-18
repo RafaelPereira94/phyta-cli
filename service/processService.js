@@ -17,24 +17,37 @@ module.exports = {
  * @returns {Array} - Array with the results in a matrix format.
  */
 function processTrees(trees, metrics, types) {
+    const tLen = trees.length, matrix = []
 
-    let metricResult
-    const tLen = trees.length, matrix = new Array(trees.length)
+    //does not process the last tree row because those results are already computed
+    //except last vs last
     for (let i = 0; i < tLen - 1; ++i) {
-        matrix[i] = new Array(tLen).fill('n.s')
-        for (let j = i + 1; j < tLen; ++j) {
-            matrix[j] = new Array(tLen).fill('n.s')
-            matrix[i][j] = []
-            matrix[j][i] = []
+        if(matrix[i] == undefined) matrix[i] = []
+        for (let j = i; j < tLen; ++j) {
+            if(matrix[j] == undefined) matrix[j] = []
+            const results = new Array()
             metrics.forEach(m => {
-                if (configService.validateMetricsForTrees(types[i], types[j], m)) {
-                    metricResult = metricsFiles[m](trees[i], trees[j])
-                    matrix[i][j].push(new Result(trees[i].id, trees[j].id, m, metricResult))
-                    matrix[j][i].push(new Result(trees[j].id, trees[i].id, m, metricResult))
+                if(configService.validateMetricsForTrees(types[i], types[j], m)){
+                    if(i == j){
+                        results.push({metric: m, result: 0})
+                    }
+                    else{
+                        results.push({metric: m, result: metricsFiles[m](trees[i], trees[j])})
+                        matrix[j][i] = new Result(trees[j].id, trees[i].id, results)
+
+                    }
+                    matrix[i][j] = new Result(trees[i].id, trees[j].id, results)
                 }
             })
         }
     }
+    //to compute the last cell result -> last tree vs last tree
+    const results = new Array()
+    metrics.forEach(m => {
+        if(configService.validateMetricsForTrees(types[tLen-1], types[tLen-1], m))
+            results.push({metric: m, result: 0})
+    })
+    matrix[tLen-1][tLen-1] = new Result(trees[tLen-1].id, trees[tLen-1].id, results)
     return matrix
 }
 

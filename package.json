@@ -24,13 +24,13 @@
     "phyta-cli": "./cli.js"
   },
   "keywords": [
-  "phylogenetic trees",
-  "metrics",
-  "robinson foulds",
-  "cli",
-  "phylo",
-  "newick",
-  "phylogeny",
-  "phylogenetic"
+    "phylogenetic trees",
+    "metrics",
+    "robinson foulds",
+    "cli",
+    "phylo",
+    "newick",
+    "phylogeny",
+    "phylogenetic"
   ]
 }
