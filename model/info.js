@@ -1,3 +1,4 @@
+'use strict'
 /**
  * Constructor function to create an Info. It contains the information of a Tree Element.
  * It has two properties:

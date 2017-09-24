@@ -17,6 +17,9 @@ Shows the usage information.
 * **`-V, --version`**
 Shows the CLI version number.
 
+* **`-l, --path <path>`** 
+Path to folder with files to be processed.
+
 * **`-f, --trees <path>`** 
 Path to file with trees to be processed.
 
@@ -59,13 +62,22 @@ All the metrics, trees and tree types are separated by `$` character.
 
 Using the files specified above, we can run CLI using this command:
 
-> phyta-cli --trees /Users/RafaelPereira/Desktop/trees/trees.txt --types /Users/RafaelPereira/Desktop/trees/types.txt --metrics /Users/Raf
-  aelPereira/Desktop/trees/metrics.txt --parser newick --output /Users/RafaelPereira/Desktop
+> phyta-cli --path /Users/rafae/Desktop/Trees/ --trees trees.txt --types types.txt --metrics metrics.txt --parser newick --output results
 
+**Results:**
 
+Now we give more details about the trees inserted
+ and we mark the similarities and dissimilarities between phylogenetic trees given by
+ the json field diffsT1 and diffsT2.
+ 
 **Supported metrics and parsers:**
 
-For now only Robinson–Foulds and Robinson–Foulds Length are available in the future more metrics will be added, for example: Triplet metric.
+Now we support four metrics!! Each are: Robinson–Foulds, Robinson–Foulds Length, triplet and quartet metric.
 
 More parsers may be added in the future but for now only newick parser is supported.
 
+**Web-application:**
+
+If you desire to see the tree visualization and not only the result values,
+we have [web application](http://cloud131.ncg.ingrid.pt:3000/home) temporally hosted.
+Feel free to test it out and if possible give us some opinions and critics.

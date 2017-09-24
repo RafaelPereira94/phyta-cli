@@ -5,6 +5,8 @@ const Info = require('./info.js')
 const radix = require('./../sortingAlgorithms/radixSort.js')
 const quickSort = require('./../sortingAlgorithms/quickSort.js')
 const TreeRepresentation = require('./treeRepresentation.js')
+const Triplet = require('./triplet.js')
+const combinations = require('./../metrics/utils.js').combinations
 
 /**
  * Constructor function to create Rooted Trees.
@@ -13,6 +15,7 @@ const TreeRepresentation = require('./treeRepresentation.js')
  */
 function RootedTree(){
     Tree.call(this)
+    this.triplets = null
 
     /**
      * Creates a new Node for the tree.
@@ -63,6 +66,7 @@ function RootedTree(){
             })
             visited.pop()
         }
+
         structure.clusters.each(c => radix(c, id => hashtable.getItem(id).data))
 
         quickSort(structure.ids, a => {
@@ -109,6 +113,107 @@ function RootedTree(){
         })
 
         return new TreeRepresentation(this.id, this.format, type, f, this.hashtable.items, this.getClusters())
+    }
+
+  /**
+   * Does postOrder recursion on the tree to solve the triplets.
+   * 
+   * @return {Array} Returns as array with the triplets.
+   */
+  this.getTriplets = function(){
+    if(this.triplets != null) return this.triplets
+      const tree = this.tree
+      const hashtable = this.hashtable
+      const res = []
+      postorder(res, tree)
+
+      quickSort(res, a =>{
+        let str = ''
+        a.double.forEach(letter =>{
+          str += hashtable.getItem(letter).data
+        })
+        str+=hashtable.getItem(a.single).data
+        return str
+      })
+      this.triplets = res
+      return res
+
+      function postorder(res, elem){
+        let triplets = []
+        elem.children.forEach(e =>{
+          if(e.children.length == 0){ //no folha
+            triplets.push(e.id)
+          }
+          else{
+            triplets.push(postorder(res, e))
+          }
+        })
+
+        if(triplets.length == 2){
+          let p1Comb = combinations(triplets[0], 2)
+          let p2Comb = combinations(triplets[1], 2)
+
+          if(!Array.isArray(p1Comb) && !Array.isArray(p2Comb) && !Array.isArray(triplets[1]) && !Array.isArray(triplets[0]))
+            return triplets
+
+          if(!Array.isArray(triplets[0])) {
+            if(Array.isArray(p2Comb)) {
+              p2Comb.forEach(p1 => {
+                quickSort(p1, a => hashtable.getItem(a).data)
+                res.push(new Triplet(triplets[0], p1))
+              })
+            }
+          }
+          else triplets[0].forEach(p => {
+            if(!Array.isArray(p2Comb)){
+              if(Array.isArray(p)){ //cuidado ver este caso para ordenação
+                quickSort(p,a => hashtable.getItem(a).data)
+                res.push(new Triplet(p, p2Comb))
+              }
+            }
+            else p2Comb.forEach(p1 => {
+              quickSort(p1,a => hashtable.getItem(a).data)
+              res.push(new Triplet(p, p1))
+            })
+          })
+
+          if(!Array.isArray(triplets[1])) {
+            if(Array.isArray(p1Comb)) {
+              p1Comb.forEach(p1 => {
+                quickSort(p1,a => hashtable.getItem(a).data)
+                res.push(new Triplet(triplets[1], p1))
+              })
+            }
+          }
+          else triplets[1].forEach(p => {
+            if(!Array.isArray(p1Comb)){
+              if(Array.isArray(p)){
+                quickSort(p,a => hashtable.getItem(p).data)
+                res.push(new Triplet(p1Comb, p))
+              }
+            }
+            else p1Comb.forEach(p1 =>{
+              quickSort(p1,a => hashtable.getItem(a).data)
+              res.push(new Triplet(p, p1))
+            })
+          })
+        }
+        triplets = flatten(triplets)
+
+        return triplets
+      }
+
+      /**
+       * Flatterns the Array
+       * 
+       * @param {Array} arr - Array to be flatten
+       * @returns {Array} Returns the flatten array
+       */
+      function flatten(arr) {
+        return arr.reduce(function (flat, toFlatten) {
+          return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
+        }, [])
+      }
     }
 }
 

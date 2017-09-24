@@ -4,6 +4,8 @@ const Vertex = require('./vertex.js')
 const radix = require('./../sortingAlgorithms/radixSort.js')
 const quickSort = require('./../sortingAlgorithms/quickSort.js')
 const TreeRepresentation = require('./treeRepresentation.js')
+const Quartet = require('./quartet.js')
+const combinations = require('./../metrics/utils.js').combinations
 
 /**
  * Constructor function to create Unrooted Trees.
@@ -12,6 +14,7 @@ const TreeRepresentation = require('./treeRepresentation.js')
  */
 function UnrootedTree(){
     Tree.call(this)
+    this.quartet = null
 
     /**
      * Creates a new Vertex for the tree.
@@ -51,7 +54,6 @@ function UnrootedTree(){
         }*/
         dfs(tree.tree)
 
-        //add all tree items to cluster (because of forests)
         structure.clusters.setItem(tree.tree.id, keys)
         structure.ids.push(tree.tree.id)
 
@@ -80,6 +82,13 @@ function UnrootedTree(){
             }
         }
 
+        
+        /**
+         * Always saves the smallest side - left or rigth if the split
+         * 
+         * @param {any} id 
+         * @param {any} cluster 
+         */
         function saveCluster(id, cluster){
             structure.ids.push(id)
             if(cluster.length > (keys.length / 2)){
@@ -113,6 +122,15 @@ function UnrootedTree(){
         }
     }
 
+    this.getLeaves = function(){
+        const leaves = []
+        this.visit(this.tree, e => {
+            if(e.vertexes.length == 1)
+                leaves.push(e.id)
+        })
+        return leaves
+    }
+
     /**
      * Produces a representation of the Tree.
      * 
@@ -130,6 +148,68 @@ function UnrootedTree(){
         const tr = new TreeRepresentation(this.id, this.format, type, f, this.hashtable.items, this.getClusters())
         return tr
     }
+
+
+    /**
+     * Does postOrder recursion on the tree to solve the quartets.
+     * 
+     * @returns {Array} Returns as array with the quartets.
+     */
+    this.getQuartets = function () {
+        if(this.quartet != null) return this.quartet
+        let visited = []
+        let res = []
+        const tree = this
+        const hashtable = tree.hashtable
+        const leaves = this.getLeaves()
+        quickSort(leaves, id => tree.getItemData(id))
+
+        dfs(tree.tree)
+
+        quickSort(res, a => {
+            let str = ''
+            a.partition1.forEach(letter => str += hashtable.getItem(letter).data)
+            a.partition2.forEach(letter => str += hashtable.getItem(letter).data)
+            return str
+        })
+        this.quartet = res
+        return res
+
+        function dfs(elem){
+            visited.push(elem.id)
+            let aux = [elem.id]
+            elem.vertexes.forEach(e => {
+                if(visited.find(v => v == e.id) == undefined){
+                    aux.push(e.id)
+                    dfs(e)
+                }
+            })
+            saveCluster(aux)
+        }
+
+        function saveCluster(p1){
+            p1 = p1.filter(e => leaves.includes(e))
+            if(p1.length == 1 || p1.length == leaves.length - 1) //se for split numa folha n dá para fazer com 2 a 2
+                return
+            
+            quickSort(p1, a => hashtable.getItem(a).data)
+            let comb1 = combinations(p1, 2)
+            let comb2 = combinations(leaves.filter(id => !p1.includes(id)), 2)
+            comb1.forEach(c1 => {
+                comb2.forEach(c2 => {
+                    if(c1[0]+c1[1] < c2[0]+c2[1]){
+                        if(res.find(e => e.partition1.join('') == c1.join('') && e.partition2.join('') == c2.join('')) === undefined)
+                            res.push(new Quartet(c1, c2))
+                    }
+                    else{
+                        if(res.find(e => e.partition1.join('') == c2.join('') && e.partition2.join('') == c1.join('')) === undefined)
+                            res.push(new Quartet(c2, c1))
+                    }
+                })
+            })
+        }
+    }
 }
+
 UnrootedTree.prototype = Object.create(Tree.prototype)
 module.exports = UnrootedTree

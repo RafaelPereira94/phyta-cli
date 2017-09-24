@@ -1,4 +1,4 @@
-'use strict'
+
 /**
  * Constructor function to create a Result.
  * It represents a result of a metric.
