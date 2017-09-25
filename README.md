@@ -20,19 +20,19 @@ Shows the CLI version number.
 * **`-l, --path <path>`** 
 Path to folder with files to be processed.
 
-* **`-f, --trees <path>`** 
+* **`-f, --trees <fileName>`** 
 Path to file with trees to be processed.
 
-* **`-t, --types <path>`**
+* **`-t, --types <fileName>`**
 Path to file with tree types.
 
-* **`-m, --metrics <path>`**
+* **`-m, --metrics <fileName>`**
 Path to file with metrics.
 
 * **`-p,  --parser <parser>`**
 Parser to be used on the trees.
 
-* **`-o,  --output <path>`**
+* **`-o,  --output <fileName>`**
 Output path where the results will be saved.
 
 All command options are required, if any one of them is missing an exception will be thrown.
